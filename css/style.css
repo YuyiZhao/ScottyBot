@@ -7,23 +7,43 @@ body {
 }
 
 input {
-	padding: 5px;
+	padding: 10px;
 	font-size: 12px;
-	width: 150px;
-	height: 12px;
+	width: 13%;
+	height: 10%;
+  box-sizing: border-box;
+  border: 2px solid white;
+  border-radius: 4px;
+}
+
+input[type=text]:focus {
+  background-color: lightblue;
 }
 
 button {
-	height: 30px;
-	width: 70px;
+	height: 50px;
+	width: 90px;
 	background: none; /* Removes default background */
 	color: #313131;
 	border: 1px solid #313131;
 	border-radius: 50px;
-	font-size: 12px;
+	font-size: 20px;
 	cursor: pointer;
 }
 
-form {
-	padding-top: 20px;
+.middle{
+	background-color: white;
+	text-align: center;
+	float: left;
+	margin: 0 1.5%;
+}
+
+ul {
+  text-align: left;
+  list-style: inside;
+}
+
+.right{
+	background-color: pink
+
 }
