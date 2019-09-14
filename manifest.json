@@ -1,9 +1,9 @@
 {
-	"name": "Simple Greeting Dashboard",
+	"name": "ScottyBot",
 
 	"version": "1.0",
 
-	"description": "This Chrome extension greets the user each time they open a new tab",
+	"description": "This little puppy appears in each new browser, and Eats, Walks, and gives FCE!",
 
 	"manifest_version": 2,
 

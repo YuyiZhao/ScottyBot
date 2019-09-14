@@ -1,9 +1,22 @@
 var data;
 $.getJSON("js/data.json", function(json) {
-    console.log(json)
     data = json;
     //put calls here?
 });
+
+
+function myFunction() {
+    id = document.getElementById("fce-input").value
+    if (isValid(id)){
+        alert(getFCE(id))
+    } else {
+        alert("Enter a valid course number")
+    }
+}
+
+function isValid(course){
+    return true;
+}
 
 function getFCE(courseId){
     courseId = courseId.split('-').join('');
@@ -23,8 +36,6 @@ function getFCE(courseId){
 
 
     }
-    console.log("people is "+ people)
-    console.log("total is "+ total)
     return (total/people);
 }
 function getName(courseId){

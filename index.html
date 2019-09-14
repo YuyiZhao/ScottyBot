@@ -2,27 +2,27 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Simple Chrome Extension</title>
+	<title>ScottyBot</title>
 
 	<link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
 </head>
 <body>
 	<h1>ScottyBot</h1>
 	<h2 class="greeting" id="greeting"></h2>
-	<img id = "dog" src="assets/test.gif" alt="Test Doggo">
+	<video id = "dog" alt= "No doggo :(" autoplay>
+		<source src = "assets/scotty.mp4" type = "video/mp4">
+	</video>
 	<div id = inputs>
 		<button id="treat-button">Treat</button>
 		<button id="walk-button">Walk</button>
-		<input type="text" class="FCE-input" id="FCE-input" placeholder="Type your course number">
-		<button class="FCE-button" type="submit">Submit</button>
+		<input type="text" id = "fce-input" placeholder="Type your course number">
+		<button onclick="myFunction()">Submit</button>
 	</div>
-	<script type="text/javascript" src = "js/jquery-3.4.1.min.js"></script>
-	<script type="text/javascript" src = "js/data.js"></script>
 	<div id = stats>
 			<ul>
-				<li>Weight: </li>
-				<li>Treats Eaten: </li>
-				<li>Miles Walked </li>
+				<li id="treats-given">Treats Eaten: 0</li>
+				<li id="distance-walked">Distance Walked: 0km </li>
+				<li id="weight">Weight: 8 kg</li>
 			</ul>
 	</div>
 	<div id = fce>
@@ -30,5 +30,9 @@
 		</ul>
 		<body>FCE total: </body>
 	</div>
+	<script type="text/javascript" src = "js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src = "js/data.js"></script>
+	<script type="text/javascript" src = "js/main.js"></script>
+	<script type="text/javascript" src = "js/scottyFunctions.js"></script>
 </body>
 </html>
