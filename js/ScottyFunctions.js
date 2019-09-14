@@ -20,6 +20,19 @@ function addItem(type, index) {
 var walkTime = 12000;
 var treatTime = 3000;
 
+function timer(timeout, interval) {
+    var startTime = (new Date()).getTime();
+    interval = interval || 1000;
+
+    (function p() {
+        if (((new Date).getTime() - startTime ) <= timeout)  {
+            setTimeout(p, interval);
+        }
+    })();
+}
+
+pollFunc(sendHeartBeat, 60000, 1000);
+
 // starts walk timer (20 min.)
 function startWalk() {
     canWalk = false;
@@ -40,7 +53,7 @@ function decrementWalkTimer() {
     if (walkTime == 0) {
         endWalk();
     } else {
-        setTimeout(decrementWalkTimer, 1000)
+        setTimeout('decrementWalkTimer()', 1000)
     }
 }
 
@@ -52,6 +65,7 @@ function startTreat() {
 
 // decrease treat timer by one second
 function decrementTreatTimer() {
+
     treatTime -= 1000
     if ((treatTime/1000) % 60 < 10) {
         mins = "0" + (treatTime/1000 % 60).toString()
@@ -64,7 +78,7 @@ function decrementTreatTimer() {
     if (treatTime == 0) {
         endTreat();
     } else {
-        setTimeout(decrementTreatTimer, 1000)
+        setTimeout('decrementTreatTimer()', 1000);
     }
 }
 
