@@ -9,12 +9,18 @@ document.getElementById("submit").addEventListener("click", myFunction);
 document.getElementById('walk').addEventListener('ended',unWalk);
 document.getElementById('eat').addEventListener('ended',unEat);
 
+function clearItems(){
+    for(var k = 0; k<items.length;k++){
+        document.getElementById("item-"+(k+1)).style.display="none"       
+    }
+}
 
 function walk(){
     document.getElementById("walk").style.display = "block"
     document.getElementById("eat").style.display = "none"
     document.getElementById("dog").style.display = "none"
     document.getElementById("walk").play();
+    clearItems();
 }
 function unWalk(){
     document.getElementById("dog").style.display = "block"
@@ -27,6 +33,7 @@ function eat(){
     document.getElementById("dog").style.display = "none"
     document.getElementById("walk").style.display = "none"
     document.getElementById("eat").play();
+    clearItems();
 }
 function unEat(){
     document.getElementById("dog").style.display = "block"
@@ -95,21 +102,21 @@ var canFeed = true
  
 var filepath = ["assets/scotty_friends.png", "assets/scotty_pipe.png", "assets/scotty_scarf_tartan.png", "assets/scotty_scarf_cmu.png", "assets/scotty_volley.png"];
 var items =         ["frens", "bagpipe", "scarf-c", "scarf-t", "volleyball"];
-var probabilities = [ 1,    1,       1,      1,      1       ];
+var probabilities = [ .25,    .25,       .25,      .25,      .25       ];
 var inventory = [];
  
  
 var walkTime = 3000;
 var treatTime = 3000;
-
-for(var i = 0; i<items.length;i++){ 
+//hardcoded stuff
+for(let i = 0; i<5;i++){ 
     document.getElementById(items[i]).addEventListener('click', function(acc) {
         for(var k = 0; k<items.length;k++){
-            console.log("item-"+(k+1))
             document.getElementById("item-"+(k+1)).style.display="none"
            
         }
         var s = "item-"+(i+1);
+        console.log(s)
         document.getElementById(s).style.display = "block"
     });
 }
