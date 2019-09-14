@@ -4,6 +4,7 @@ $.getJSON("js/data.json", function(json) {
     //put calls here?
 });
 
+document.getElementById("submit").addEventListener("click", myFunction);
 
 function myFunction() {
     id = document.getElementById("fce-input").value
@@ -48,6 +49,7 @@ function getName(courseId){
     }
     return false;
 }
+
 
 
 
