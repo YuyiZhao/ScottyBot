@@ -5,11 +5,11 @@ var weight = parseInt(8)
 var canWalk = true
 var canFeed = true
  
-var hats = ["Beanie", "Cap", "Fedora"]
-var toys = ["Frisbee", "Bone"]
-var balls = ["Soccer", "Basketball", "Tennisball"]
-var itemList = [hats, toys, balls]
-var inventory = [[], [], []] // list of hats, toys, and balls owned, listed by index number
+var filepath = ["assets/scotty_friends", "assets/scotty_pipe", "assets/scotty_scarf_tartan", "assets/scotty_scarf_cmu", "assets/scotty_volley"]
+var items =         ["frens", "bagpipe", "scarf-c", "scarf-t", "volleyball"]
+var probabilities = [ 0.05,    0.1,       0.15,      0.15,      0.15       ]
+var coordinates =   [[0,0],   [0,0],     [0,0],     [0,0],     [0,0]       ]
+var inventory = []
  
  
 // Adds a new item to local inventory, indexed by type (hat-0, toys-1, balls-2) and number.
@@ -80,6 +80,7 @@ function endWalk() {
     document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
     walkTime = 12000
+    findItem()
     update()
     save()
  
@@ -96,6 +97,18 @@ function endTreat() {
     save()
 }
  
+function findItem() {
+    var i;
+    for (i = 0; i < items.length; i++) {
+        if (Math.random() == probabilities[i]) {
+            inventory.push(items[i])
+            break
+        }
+    }
+    document.getElementById(items[i]).innerHTML = names[i]
+    document.getElementById(items[i]).addEventListener('click', wearItem(i))
+}
+ 
 function update() {
     document.getElementById("treats-given").innerHTML = "Treats Eaten: " + treatsGiven
     document.getElementById("distance-walked").innerHTML = "Distance Walked: " + distanceWalked + " km"
@@ -105,7 +118,8 @@ function update() {
 function save() {
     localStorage.setItem("distance", distanceWalked);
     localStorage.setItem("treats", treatsGiven);
-    localStorage.setItem("weights", weight)
+    localStorage.setItem("weights", weight);
+    localStorage.setItem("inventories", inventory);
 }
  
 function reset() {
@@ -118,7 +132,8 @@ function reset() {
 function load() {
     distanceWalked = localStorage.getItem("distance");
     treatsGiven = localStorage.getItem("treats");
-    weight = localStorage.getItem("weights")
+    weight = localStorage.getItem("weights");
+    inventory = localStorage.getItem("inventories");
  
     if(weight == null)
         weight = 8
@@ -130,5 +145,27 @@ function load() {
 }
  
 load()
+// initialize walk/treat buttons
 document.getElementById("walk-button").addEventListener('click', startWalk);
 document.getElementById("treat-button").addEventListener('click', startTreat);
+ 
+function wearItem(index) {
+    return coordinates[index]
+}
+ 
+function noItem(index) {
+    return
+}
+ 
+// initialize inventory item buttons
+names = ["Scotty and Frens", "ScottyPipe", "CMU Scarf", "Stylish Scarf", "Volleyball"]
+for(var i = 0; i < items.length; i++) {
+    if(inventory.includes(items[i])) {
+        document.getElementById(items[i]).innerHTML = names[i]
+        document.getElementById(items[i]).addEventListener('click', wearItem(i))
+    } else {
+        document.getElementById(items[i]).innerHTML = "???"
+        document.getElementById(items[i]).addEventListener('click', noItem(i))
+    }
+ 
+}
