@@ -14,7 +14,8 @@
 	},
 
 	"permissions": [ //Value of this will give user a pop-up letting them know this extension will_
-		"activeTab" //override their new tab when they try to install it
+		"activeTab",
+		"storage"
 	],
 
 	"icons": { //Tells Chrome what to display 

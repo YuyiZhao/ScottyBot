@@ -15,6 +15,7 @@ var inventory = [[], [], []] // list of hats, toys, and balls owned, listed by i
 // Adds a new item to local inventory, indexed by type (hat-0, toys-1, balls-2) and number.
 function addItem(type, index) {
     inventory[type].push(itemList[type][index]);
+    save()
 }
 
 var walkTime = 12000;
@@ -79,6 +80,7 @@ function endWalk() {
     document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
     walkTime = 12000
+    save()
 
 }
 
@@ -92,7 +94,22 @@ function endTreat() {
     document.getElementById("treat-button").innerHTML = "Feed"
     canFeed = true
     treatTime = 3000
+    save()
+}
+function save() {
+    chrome.storage.local.set( {'Accessories': inventory} )
+    chrome.storage.local.set( {'Distance': distanceWalked} )
+    chrome.storage.local.set( {'Treats': treatsGiven} )
+    chrome.storage.local.set( {'Weight': weight} )
 }
 
+function load() {
+    chrome.storage.local.get('Accessories': function(result) { inventory = result; alert(result); })
+    chrome.storage.local.get('Distance': function(result) { distanceWalked = result; alert(result); })
+    chrome.storage.local.get('Treats': function(result) { treatsGiven = result; alert(result); })
+    chrome.storage.local.get('Weights': function(result) { weigh = result; alert(result); })
+}
+ 
+load()
 document.getElementById("walk-button").addEventListener('click', startWalk);
 document.getElementById("treat-button").addEventListener('click', startTreat);

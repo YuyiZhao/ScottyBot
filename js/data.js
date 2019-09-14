@@ -9,7 +9,7 @@ document.getElementById("submit").addEventListener("click", myFunction);
 function myFunction() {
     id = document.getElementById("fce-input").value
     if (isValid(id)){
-        alert(getFCE(id))
+        alert("Average time spent for " + getName(id) + ": "+ getFCE(id))
     } else {
         alert("Enter a valid course number")
     }
