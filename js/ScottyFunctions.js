@@ -1,3 +1,5 @@
+Content-Security-SecurityPolicyViolationEvent
+
 var treatsGiven = 0
 var distanceWalked = 0 
 var weight = 8  
@@ -23,25 +25,36 @@ var treatTime = 3000;
 // starts walk timer (20 min.)
 function startWalk() {
     canWalk = false;
-    walkTime -= 1000;
-    var timer = (walkTime/1000) % 60 + ":" + Math.floor((walkTime/1000) / 60);
-    document.getElementById("walk-timer").innerHTML = timer;
+    setTimeout('decrementWalkTimer()', 1000)
+}
+
+// decrease walk timer by one second 
+function decrementWalkTimer() {
+    walkTime -= 1000
+    var timer = Math.floor((walkTime/1000) / 60) + ":" + (walkTime/1000) % 60
+    document.getElementById("walk-button").innerHTML = timer
     if (walkTime == 0) {
         endWalk();
     } else {
-        setTimeout('startWalk()', 1000)
+        setTimeout('decrementWalkTimer()', 1000)
     }
 }
 
+// starts treat timer (5 min.)
 function startTreat() {
-    canFeed = false;
-    treatTime -= 1000;
-    var timer = (walkTime/1000) % 60 + ":" + Math.floor((walkTime/1000) / 60);
-    document.getElementById("treat-timer").innerHTML = timer;
+    canTreat = false
+    setTimeout('decrementTreatTimer()', 1000);
+}
+
+// decrease treat timer by one second
+function decrementTreatTimer() {
+    treatTime -= 1000
+    var timer = Math.floor((treatTime/1000) / 60) + ":" + (treatTime/1000) % 60
+    document.getElementById("treat-button").innerHTML = timer
     if (treatTime == 0) {
         endTreat();
     } else {
-        setTimeout('startTreat()', 1000);
+        setTimeout('decrementTreatTimer()', 1000);
     }
 }
 
@@ -52,7 +65,10 @@ function endWalk() {
     calories = distanceWalked * 30
     document.getElementById("distance-walked").innerHTML = "Distance Walked: " + distanceWalked + "km"
     document.getElementById("weight").innerHTML = "Scotty Weight: " + weight.toFixed(3)
+    document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
+    walkTime = 12000
+
 }
 
 function endTreat() {
@@ -61,13 +77,10 @@ function endTreat() {
     calories = treatsGiven * 50;
     document.getElementById("treats-given").innerHTML = "Treats Eaten: " + treatsGiven
     document.getElementById("weight").innerHTML = "Scotty Weight: " + weight.toFixed(3)
+    document.getElementById("treat-button").innerHTML = "Feed"
     canFeed = true
+    treatTime = 3000
 }
 
-document.getElementById("walk-button").addEventListener('click', endWalk);
-document.getElementById("treat-button").addEventListener('click', endTreat);
-
-
-
-
-
+document.getElementById("walk-button").addEventListener('click', startWalk);
+document.getElementById("treat-button").addEventListener('click', startTreat);
