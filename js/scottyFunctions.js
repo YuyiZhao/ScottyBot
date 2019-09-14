@@ -15,11 +15,23 @@ var inventory = [[], [], []] // list of hats, toys, and balls owned, listed by i
 // Adds a new item to local inventory, indexed by type (hat-0, toys-1, balls-2) and number.
 function addItem(type, index) {
     inventory[type].push(itemList[type][index]);
-    save()
 }
 
 var walkTime = 12000;
 var treatTime = 3000;
+
+function timer(timeout, interval) {
+    var startTime = (new Date()).getTime();
+    interval = interval || 1000;
+
+    (function p() {
+        if (((new Date).getTime() - startTime ) <= timeout)  {
+            setTimeout(p, interval);
+        }
+    })();
+}
+
+pollFunc(sendHeartBeat, 60000, 1000);
 
 // starts walk timer (20 min.)
 function startWalk() {
@@ -41,7 +53,7 @@ function decrementWalkTimer() {
     if (walkTime == 0) {
         endWalk();
     } else {
-        setTimeout(decrementWalkTimer, 1000)
+        setTimeout('decrementWalkTimer()', 1000)
     }
 }
 
@@ -53,6 +65,7 @@ function startTreat() {
 
 // decrease treat timer by one second
 function decrementTreatTimer() {
+
     treatTime -= 1000
     if ((treatTime/1000) % 60 < 10) {
         mins = "0" + (treatTime/1000 % 60).toString()
@@ -65,7 +78,7 @@ function decrementTreatTimer() {
     if (treatTime == 0) {
         endTreat();
     } else {
-        setTimeout(decrementTreatTimer, 1000)
+        setTimeout('decrementTreatTimer()', 1000);
     }
 }
 
@@ -80,7 +93,6 @@ function endWalk() {
     document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
     walkTime = 12000
-    save()
 
 }
 
@@ -94,23 +106,7 @@ function endTreat() {
     document.getElementById("treat-button").innerHTML = "Feed"
     canFeed = true
     treatTime = 3000
-    save()
-}
-function save() {
-    localStorage.setItem("distance", distanceWalked);
-    localStorage.setItem("treats", treatsGiven);
-    localStorage.setItem("weights", weight)
 }
 
-function load() {
-    distanceWalked = localStorage.getItem("distance");
-    treatsGiven = localStorage.getItem("treats");
-    weight = localStorage.getItem("weights")
-    if(weight == null) {
-        weight = 8
-    }
-}
- 
-load()
 document.getElementById("walk-button").addEventListener('click', startWalk);
 document.getElementById("treat-button").addEventListener('click', startTreat);
