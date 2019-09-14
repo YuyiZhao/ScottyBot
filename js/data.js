@@ -6,6 +6,9 @@ $.getJSON("js/data.json", function(json) {
 
 document.getElementById("dog").addEventListener("click", pet);
 document.getElementById("submit").addEventListener("click", myFunction);
+document.getElementById('walk').addEventListener('ended',unPet);
+document.getElementById('eat').addEventListener('ended',unEat);
+
 
 function pet(){
     document.getElementById("walk").style.display = "block"
@@ -16,7 +19,17 @@ function unPet(){
     document.getElementById("walk").style.display = "none"
     document.getElementById("dog").style.display = "block"
 }
-document.getElementById('walk').addEventListener('ended',unPet);
+
+function eat(){
+    document.getElementById("eat").style.display = "block"
+    document.getElementById("dog").style.display = "none"
+    document.getElementById("eat").play();
+}
+function unEat(){
+    document.getElementById("eat").style.display = "none"
+    document.getElementById("dog").style.display = "block"
+}
+
 function myHandler(e) {
     // What you want to do after the event
 }
