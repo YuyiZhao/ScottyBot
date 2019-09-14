@@ -76,3 +76,14 @@ ul {
 .upper{
 	background-color: #71FDC5
 }
+
+.items{
+	border-radius: 50px;
+	font-size: 20px;
+	height: 110px;
+	width: 110px;
+	background-color: lightgray
+}
+
+.btn-group{
+}
