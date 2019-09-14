@@ -1,6 +1,6 @@
 var treatsGiven = 0
 var distanceWalked = 0
-var weight = 8  
+var weight = parseInt(8)
  
 var canWalk = true
 var canFeed = true
@@ -75,10 +75,8 @@ function decrementTreatTimer() {
  
 function endWalk() {
     console.log("Yote")
-    distanceWalked += 1;
-    alert(distanceWalked)
-    if(weight > 5)
-        weight *= 0.975;
+    distanceWalked++;
+    weight = (weight*0.975).toFixed(3);
     document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
     walkTime = 12000
@@ -90,7 +88,7 @@ function endWalk() {
 function endTreat() {
     console.log("Yeet")
     treatsGiven++;
-    weight *= 1.05;
+    weight = (weight*1.05).toFixed(3);
     document.getElementById("treat-button").innerHTML = "Feed"
     canFeed = true
     treatTime = 3000
@@ -100,8 +98,8 @@ function endTreat() {
  
 function update() {
     document.getElementById("treats-given").innerHTML = "Treats Eaten: " + treatsGiven
-    document.getElementById("distance-walked").innerHTML = "Distance Walked: " + distanceWalked + "km"
-    document.getElementById("weight").innerHTML = "Scotty Weight: " + weight.toFixed(3) + "kg"
+    document.getElementById("distance-walked").innerHTML = "Distance Walked: " + distanceWalked + " km"
+    document.getElementById("weight").innerHTML = "Scotty's Weight: " + weight + " kg"
 }
  
 function save() {
@@ -110,16 +108,27 @@ function save() {
     localStorage.setItem("weights", weight)
 }
  
+function reset() {
+    treatsGiven = 0
+    distanceWalked = 0
+    weight = 8
+    update()
+}
+ 
 function load() {
     distanceWalked = localStorage.getItem("distance");
     treatsGiven = localStorage.getItem("treats");
     weight = localStorage.getItem("weights")
-    if(weight == null) {
+ 
+    if(weight == null)
         weight = 8
-    }
+    if(treatsGiven == null)
+        treatsGiven = 0
+    if(distanceWalked == null)
+        distanceWalked = 0
+    update()
 }
  
 load()
-alert(treatsGiven + " " + distanceWalked)
 document.getElementById("walk-button").addEventListener('click', startWalk);
 document.getElementById("treat-button").addEventListener('click', startTreat);
