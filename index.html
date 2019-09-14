@@ -8,16 +8,27 @@
 </head>
 <body>
 	<h1>ScottyBot</h1>
-	<button id="settings-button">Settings</button>
 	<h2 class="greeting" id="greeting"></h2>
-	<img src="assets/test.gif" alt="Test Doggo">
+	<img id = "dog" src="assets/test.gif" alt="Test Doggo">
 	<div id = inputs>
 		<button id="treat-button">Treat</button>
 		<button id="walk-button">Walk</button>
-		<input type="text" class="name-input" id="name-input" placeholder="Type your name here...">
-		<button class="name-button" type="submit">Add</button>
+		<input type="text" class="FCE-input" id="FCE-input" placeholder="Type your course number">
+		<button class="FCE-button" type="submit">Submit</button>
 	</div>
 	<script type="text/javascript" src = "js/jquery-3.4.1.min.js"></script>
 	<script type="text/javascript" src = "js/data.js"></script>
+	<div id = stats>
+			<ul>
+				<li>Weight: </li>
+				<li>Treats Eaten: </li>
+				<li>Miles Walked </li>
+			</ul>
+	</div>
+	<div id = fce>
+		<ul id = fce-list>
+		</ul>
+		<body>FCE total: </body>
+	</div>
 </body>
 </html>
