@@ -84,6 +84,39 @@ ul {
 	width: 110px;
 	background-color: lightgray
 }
+#item-1{
+	display: none;
+	width: 590px;
+	left: 80px;
+	top: 180px;
 
-.btn-group{
+}
+#item-2{
+	display:none;
+	left: 100px;
+	top: 250px;
+}
+#item-3{
+	display:none;
+	left: 150px;
+	top: 210px;
+}
+#item-4{
+	display:none;
+	left: 150px;
+	top: 210px;
+
+}
+#item-5{
+	display:none;
+	left: 5px;
+	top: 230px;
+}
+.acessories{
+	width: 450px;
+	position: absolute;
+}
+
+.v{
+	width: 700px;
 }
