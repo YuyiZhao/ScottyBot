@@ -1,21 +1,4 @@
-var treatsGiven = 0
-var distanceWalked = 0
-var weight = parseInt(8)
- 
-var canWalk = true
-var canFeed = true
- 
-var hats = ["Beanie", "Cap", "Fedora"]
-var toys = ["Frisbee", "Bone"]
-var balls = ["Soccer", "Basketball", "Tennisball"]
-var itemList = [hats, toys, balls]
-var inventory = [[], [], []] // list of hats, toys, and balls owned, listed by index number
- 
- 
-// Adds a new item to local inventory, indexed by type (hat-0, toys-1, balls-2) and number.
-function addItem(type, index) {
-    inventory[type].push(itemList[type][index]);
-    save()
+
 }
  
 var walkTime = 12000;
@@ -80,6 +63,7 @@ function endWalk() {
     document.getElementById("walk-button").innerHTML = "Walk"
     canWalk = true
     walkTime = 12000
+    findItem()
     update()
     save()
  
@@ -94,6 +78,17 @@ function endTreat() {
     treatTime = 3000
     update()
     save()
+}
+ 
+function findItem() {
+    for (var i = 0; i < items.length; i++) {
+        if (Math.random() == probabilities[i]) {
+            inventory.push(items[i])
+            break
+        }
+ 
+    }
+ 
 }
  
 function update() {
