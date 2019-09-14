@@ -97,17 +97,18 @@ function endTreat() {
     save()
 }
 function save() {
-    chrome.storage.local.set( {'Accessories': inventory} )
-    chrome.storage.local.set( {'Distance': distanceWalked} )
-    chrome.storage.local.set( {'Treats': treatsGiven} )
-    chrome.storage.local.set( {'Weight': weight} )
+    localStorage.setItem("distance", distanceWalked);
+    localStorage.setItem("treats", treatsGiven);
+    localStorage.setItem("weights", weight)
 }
 
 function load() {
-    chrome.storage.local.get('Accessories': function(result) { inventory = result; alert(result); })
-    chrome.storage.local.get('Distance': function(result) { distanceWalked = result; alert(result); })
-    chrome.storage.local.get('Treats': function(result) { treatsGiven = result; alert(result); })
-    chrome.storage.local.get('Weights': function(result) { weigh = result; alert(result); })
+    distanceWalked = localStorage.getItem("distance");
+    treatsGiven = localStorage.getItem("treats");
+    weight = localStorage.getItem("weights")
+    if(weight == null) {
+        weight = 8
+    }
 }
  
 load()
