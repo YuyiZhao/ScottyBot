@@ -101,7 +101,20 @@ var inventory = [];
  
 var walkTime = 3000;
 var treatTime = 3000;
- 
+
+for(var i = 0; i<items.length;i++){ 
+    document.getElementById(items[i]).addEventListener('click', function(acc) {
+        for(var k = 0; k<items.length;k++){
+            console.log("item-"+(k+1))
+            document.getElementById("item-"+(k+1)).style.display="none"
+           
+        }
+        var s = "item-"+(i+1);
+        document.getElementById(s).style.display = "block"
+    });
+}
+
+
 // starts walk timer (20 min.)
 function startWalk() {
     if(canWalk&&canFeed) {
