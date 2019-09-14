@@ -1,5 +1,3 @@
-Content-Security-SecurityPolicyViolationEvent
-
 var treatsGiven = 0
 var distanceWalked = 0 
 var weight = 8  
@@ -22,16 +20,35 @@ function addItem(type, index) {
 var walkTime = 12000;
 var treatTime = 3000;
 
+function timer(timeout, interval) {
+    var startTime = (new Date()).getTime();
+    interval = interval || 1000;
+
+    (function p() {
+        if (((new Date).getTime() - startTime ) <= timeout)  {
+            setTimeout(p, interval);
+        }
+    })();
+}
+
+pollFunc(sendHeartBeat, 60000, 1000);
+
 // starts walk timer (20 min.)
 function startWalk() {
     canWalk = false;
-    setTimeout('decrementWalkTimer()', 1000)
+    decrementWalkTimer()
 }
 
 // decrease walk timer by one second 
 function decrementWalkTimer() {
     walkTime -= 1000
-    var timer = Math.floor((walkTime/1000) / 60) + ":" + (walkTime/1000) % 60
+    if ((walkTime/1000) % 60 < 10) {
+        mins = "0" + (walkTime/1000 % 60).toString()
+    } else {
+        mins = walkTime/1000 % 60
+    }
+    var timer = Math.floor((walkTime/1000) / 60) + ":" + mins
+
     document.getElementById("walk-button").innerHTML = timer
     if (walkTime == 0) {
         endWalk();
@@ -43,13 +60,20 @@ function decrementWalkTimer() {
 // starts treat timer (5 min.)
 function startTreat() {
     canTreat = false
-    setTimeout('decrementTreatTimer()', 1000);
+    decrementTreatTimer()
 }
 
 // decrease treat timer by one second
 function decrementTreatTimer() {
+
     treatTime -= 1000
-    var timer = Math.floor((treatTime/1000) / 60) + ":" + (treatTime/1000) % 60
+    if ((treatTime/1000) % 60 < 10) {
+        mins = "0" + (treatTime/1000 % 60).toString()
+    } else {
+        mins = treatTime/1000 % 60
+    }
+    var timer = Math.floor((treatTime/1000) / 60) + ":" + mins
+
     document.getElementById("treat-button").innerHTML = timer
     if (treatTime == 0) {
         endTreat();
@@ -59,6 +83,7 @@ function decrementTreatTimer() {
 }
 
 function endWalk() {
+    console.log("Yote")
     distanceWalked += 1;
     if(weight > 5)
         weight *= 0.975;
@@ -72,11 +97,12 @@ function endWalk() {
 }
 
 function endTreat() {
+    console.log("Yeet")
     treatsGiven++;
     weight *= 1.05;
     calories = treatsGiven * 50;
     document.getElementById("treats-given").innerHTML = "Treats Eaten: " + treatsGiven
-    document.getElementById("weight").innerHTML = "Scotty Weight: " + weight.toFixed(3)
+    document.getElementById("weight").innerHTML = "Scotty Weight: " + weight.toFixed(3) + "kg"
     document.getElementById("treat-button").innerHTML = "Feed"
     canFeed = true
     treatTime = 3000
