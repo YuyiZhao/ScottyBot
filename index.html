@@ -11,7 +11,7 @@
 	<h2 class="greeting" id="greeting"></h2>
 
 		<div class = 'middle'>
-
+			<p class = 'average'>Hi, My name is <b>Scotty</b>. See what I can do!<p>
 			<video id = "dog" autoplay loop>
 				<source src = "assets/scotty.mp4" type = "video/mp4">
 			</video>
@@ -22,17 +22,24 @@
 				<source src = "assets/walk.mp4" type = "video/mp4">
 			</video>
 
-			<div class = inputs>
+			<div class = 'inputs'>
 				</br>
 				<button id="treat-button">Treat</button>
 				<button id="walk-button">Walk</button>
-			</div>
-
-			<div class = stats>
-				<ul>
-					<li id="treats-given">Treats Eaten: 0</li>
-					<li id="distance-walked">Distance Walked: 0km </li>
-				</ul>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				</br>
+				<button class= 'items' id="item1-button">Item1</button>
+				<button class= 'items' id="item2-button">Item2</button>
+				<button class= 'items' id="item3-button">Item3</button>
+				<button class= 'items' id="item4-button">Item4</button>
+				<button class= 'items' id="item5-button">Item5</button>
 			</div>
 
 		</div>
@@ -48,22 +55,50 @@
 
 
 		<div class ='right'>
-			<h2>ScottyBot's Magic Trick!</h2>
-			<div class = inputs>
-				<input type="text" id = "fce-input" placeholder="Type your course number">
-				<button id = "submit">Submit</button>
+			<div class='upper'>
+				<p class = 'big'><u><b>FCE Calculations</u></b></p>
+				<p><b>Woof woof!</b> Enter a course number and I'll calcualte the FCE.</p>
+				<div class = inputs>
+					<input type="text" id = "fce-input" placeholder="Type your course number">
+					<button id = "submit">Submit</button>
+				</br>
+				</div>
+
+				<div id = fce>
+					<ul id = fce-list>
+					</ul>
+					<h3>FCE total: </h3>
+				</div>
+				</br>
+				</br>
 			</div>
 
-			<div id = fce>
-				<ul id = fce-list>
-				</ul>
-				<body>FCE total: </body>
-			</div>
 
-			<div class = stats>
-				<ul>
-					<li id="weight">Weight: 8 kg</li>
-				</ul>
+			</br>
+			</br>
+			</br>
+			</br>
+
+			<div class = 'upper'>
+				<div class = stats>
+					<p class = 'big'><u><b>Scotty's Stats</u></b></p>
+					<ul class = 'statistics'>
+						<li id="treats-given">Treats Eaten: 0</li>
+						<li id="distance-walked">Distance Walked: 0km </li>
+						<li id="weight">Weight: 8 kg</li>
+
+					</br>
+					</br>
+						<li >Favorite Place on Campus: Scobell</li>
+						<li >Favorite Food: Carnegie Mellon™ brand Tartan Treat™</li>
+						<li >Likes: Chasing butterflies</li>
+						<li >Dislikes: Donner</li>
+						<li >Life Motto: "Praise R Lam"</li>
+						<li >Fun Fact: I was raised by a humble man Brandon</li>
+					</ul>
+					</br>
+					</br>
+				</div>
 			</div>
 
 		</div>
