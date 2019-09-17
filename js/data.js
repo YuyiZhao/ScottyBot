@@ -47,7 +47,7 @@ function unEat(){
     setVisual("none", "none", "block")
 }
 
-//what the hell is this  -Will
+//what is this  -Will
 function myHandler(e) {
     // What you want to do after the event
 }
@@ -70,7 +70,7 @@ function myFunction() {
     }
 }
 
-//wha
+// ?
 function isValid(course){
     return true;
 }
@@ -123,6 +123,7 @@ var canFeed = true;
 var filepath = ["assets/scotty_friends.png", "assets/scotty_pipe.png", "assets/scotty_scarf_tartan.png", "assets/scotty_scarf_cmu.png", "assets/scotty_volley.png"];
 var items =         ["frens", "bagpipe", "scarf-c", "scarf-t", "volleyball"];
 var probabilities = [ .25,    .25,       .25,      .25,      .25       ];
+var names = ["Scotty and Friends", "Scotty's Bagpipe", "CMU Scarf", "Tartan Scarf", "Volleyball"]
 var inventory = [];
  
 function init() {
@@ -133,7 +134,6 @@ function init() {
     document.getElementById("treat-button").addEventListener('click', startTreat);
      
     // initialize accessory buttons
-    names = ["Scotty and Friends", "Scotty's Bagpipe", "CMU Scarf", "Tartan Scarf", "Volleyball"]
     for(var i = 0; i < names.length; i++) {
         if(inventory != null && inventory.includes(items[i])) {
             document.getElementById(items[i]).innerHTML = names[i]
@@ -147,10 +147,10 @@ function init() {
 }
 
 // CHANGE THIS TO SET WALK/TREAT TIMES 
-var walkTime = 3000;
+var walkTime = 10000;
 var treatTime = 3000;
 
-//hardcoded stuff
+//hardcoded stuff to be fixed later
 for(let i = 0; i<5;i++){ 
     document.getElementById(items[i]).addEventListener('click', function(acc) {
         for(var k = 0; k<items.length;k++){
@@ -164,7 +164,7 @@ for(let i = 0; i<5;i++){
 }
 
 
-// starts walk timer (20 min.)
+// starts walk timer
 function startWalk() {
     if(canWalk&&canFeed) {
         walk();
@@ -191,7 +191,7 @@ function decrementWalkTimer() {
     }
 }
  
-// starts treat timer (5 min.)
+// starts treat timer
 function startTreat() {
     if(canFeed&&canWalk) {
         eat()
@@ -253,8 +253,6 @@ function findItem() {
             console.log("ITEM FOUND!!!")
             console.log(typeof(inventory)+"    "+ items[i])
             inventory.push(items[i])
-
-            names = ["Scotty and Friends", "Scotty's Bagpipe", "CMU Scarf", "Tartan Scarf", "Volleyball"]
 
             for(var i = 0; i < names.length; i++) {
                 if(inventory != null && inventory.includes(items[i])) {
