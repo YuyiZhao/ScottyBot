@@ -11,39 +11,54 @@ document.getElementById('eat').addEventListener('ended',unEat);
 
 function clearItems(){
     for(var k = 0; k<items.length;k++){
-        document.getElementById("item-"+(k+1)).style.display="none"       
+        document.getElementById("item-"+(k+1)).style.display="none";       
     }
 }
 
-function walk(){
-    document.getElementById("walk").style.display = "block"
-    document.getElementById("eat").style.display = "none"
-    document.getElementById("dog").style.display = "none"
+//----------------------------------------------------------------
+//
+//    VISUAL ELEMENTS
+//
+//----------------------------------------------------------------
+
+// Changes Scotty based on whether it is walking, eating, or sitting
+function setVisual(walk, eat, dog) {
+    document.getElementById("walk").style.display = walk;
+    document.getElementById("eat").style.display = eat;
+    document.getElementById("dog").style.display = dog;
+}
+
+function walk() {
+    setVisual("block", "none", "none");
     document.getElementById("walk").play();
     clearItems();
 }
-function unWalk(){
-    document.getElementById("dog").style.display = "block"
-    document.getElementById("walk").style.display = "none"
-    document.getElementById("eat").style.display = "none"
+
+function unWalk() {
+    setVisual("none", "none", "block");
 }
 
 function eat(){
-    document.getElementById("eat").style.display = "block"
-    document.getElementById("dog").style.display = "none"
-    document.getElementById("walk").style.display = "none"
+    setVisual("none", "block", "none")
     document.getElementById("eat").play();
     clearItems();
 }
 function unEat(){
-    document.getElementById("dog").style.display = "block"
-    document.getElementById("eat").style.display = "none"
-    document.getElementById("walk").style.display = "none"
+    setVisual("none", "none", "block")
 }
 
+//what the hell is this  -Will
 function myHandler(e) {
     // What you want to do after the event
 }
+
+//----------------------------------------------------------------
+//
+//    FCE CALCULATOR
+//
+//----------------------------------------------------------------
+
+//this too  -Will
 function myFunction() {
     id = document.getElementById("fce-input").value
     if (isValid(id)){
@@ -55,6 +70,7 @@ function myFunction() {
     }
 }
 
+//wha
 function isValid(course){
     return true;
 }
@@ -91,23 +107,49 @@ function getName(courseId){
 }
 
 
-//line between his and mine
+//----------------------------------------------------------------
+//
+//    SCOTTY ACTIONS (WALK, FEED, ACCESSORIES)
+//
+//----------------------------------------------------------------
 
-var treatsGiven = 0
-var distanceWalked = 0
-var weight = parseInt(8)
+var treatsGiven = 0;
+var distanceWalked = 0;
+var weight = 8;
  
-var canWalk = true
-var canFeed = true
+var canWalk = true;
+var canFeed = true;
  
 var filepath = ["assets/scotty_friends.png", "assets/scotty_pipe.png", "assets/scotty_scarf_tartan.png", "assets/scotty_scarf_cmu.png", "assets/scotty_volley.png"];
 var items =         ["frens", "bagpipe", "scarf-c", "scarf-t", "volleyball"];
 var probabilities = [ .25,    .25,       .25,      .25,      .25       ];
 var inventory = [];
  
- 
+function init() {
+    load();
+
+    // initialize walk/treat buttons
+    document.getElementById("walk-button").addEventListener('click', startWalk);
+    document.getElementById("treat-button").addEventListener('click', startTreat);
+     
+    // initialize accessory buttons
+    names = ["Scotty and Friends", "Scotty's Bagpipe", "CMU Scarf", "Tartan Scarf", "Volleyball"]
+    for(var i = 0; i < names.length; i++) {
+        if(inventory != null && inventory.includes(items[i])) {
+            document.getElementById(items[i]).innerHTML = names[i]
+            document.getElementById(items[i]).style.display = "block"
+            console.log("ADDED: " + items[i])
+        } else {
+            document.getElementById(items[i]).style.display= "none"
+            console.log("NOT ADDED: " + items[i])
+        }
+    }
+}
+
+// CHANGE THIS TO SET WALK/TREAT TIMES 
 var walkTime = 3000;
 var treatTime = 3000;
+
 //hardcoded stuff
 for(let i = 0; i<5;i++){ 
     document.getElementById(items[i]).addEventListener('click', function(acc) {
@@ -176,6 +218,7 @@ function decrementTreatTimer() {
     }
 }
  
+// ends the walk and changes weight and distance walked counters
 function endWalk() {
     console.log("End Walk")
     distanceWalked++;
@@ -184,11 +227,12 @@ function endWalk() {
     canWalk = true
     walkTime = 3000
     update()
-    save()
     findItem()
+    save()
  
 }
  
+// ends the feeding and changes weight and distance walked counters
 function endTreat() {
     console.log("End Treat")
     treatsGiven++;
@@ -200,6 +244,7 @@ function endTreat() {
     save()
 }
  
+// mechanism for randomly finding items on walks
 function findItem() {
     var i;
     for (i = 0; i < items.length; i++) {
@@ -209,7 +254,7 @@ function findItem() {
             console.log(typeof(inventory)+"    "+ items[i])
             inventory.push(items[i])
 
-            names = ["Scotty and Frens", "ScottyPipe", "CMU Scarf", "Stylish Scarf", "Volleyball"]
+            names = ["Scotty and Friends", "Scotty's Bagpipe", "CMU Scarf", "Tartan Scarf", "Volleyball"]
 
             for(var i = 0; i < names.length; i++) {
                 if(inventory != null && inventory.includes(items[i])) {
@@ -233,32 +278,41 @@ function update() {
     document.getElementById("weight").innerHTML = "Scotty's Weight: " + weight + " kg"
 }
  
+//----------------------------------------------------------------
+//
+//    SAVE, LOAD, AND RESET SCOTTYSTATS
+//
+//----------------------------------------------------------------
+
 function save() {
     localStorage.setItem("distance", distanceWalked);
     localStorage.setItem("treats", treatsGiven);
     localStorage.setItem("weights", weight);
-    list = []
-    for(var i = 0; i < inventory.length; i++) {
-        list.push(inventory[i])
+
+    // maps item names to a boolean representing if an item was obtained or not
+    for(var i = 0; i < items.length; i++) {
+        var inInventory = 0
+        if(inventory.includes(items[i])) {
+            var inInventory = 1
+            console.log(items[i] + " saved")
+        }
+        localStorage.setItem(items[i], inInventory)
+        console.log(inInventory, items[i])
     }
-    localStorage.setItem("inventories", list);
-}
- 
-function reset() {
-    treatsGiven = 0
-    distanceWalked = 0
-    weight = 8
-    inventory = []
-    update()
 }
  
 function load() {
     distanceWalked = localStorage.getItem("distance");
     treatsGiven = localStorage.getItem("treats");
     weight = localStorage.getItem("weights");
-    console.log(localStorage.getItem("inventories"))
-    console.log(typeof(localStorage.getItem("inventories")))
-    inventory = localStorage.getItem("inventories");
+    
+    for(var i = 0; i < items.length; i++) {
+        if(localStorage.getItem(items[i]) == "true") {
+            console.log(localStorage.getItem(items[i]))
+            inventory.push(items[i]);
+            console.log(items[i] + " loaded")
+        }
+    }
  
     if(weight == null) {
         weight = 8
@@ -269,25 +323,15 @@ function load() {
     if(distanceWalked == null) {
         distanceWalked = 0
     }
-    if(inventory == null) {
-        inventory = []
-    }
+    update()
+}
+
+function reset() {
+    treatsGiven = 0
+    distanceWalked = 0
+    weight = 8
+    inventory = []
     update()
 }
  
-load()
-// initialize walk/treat buttons
-document.getElementById("walk-button").addEventListener('click', startWalk);
-document.getElementById("treat-button").addEventListener('click', startTreat);
- 
-names = ["Scotty and Frens", "ScottyPipe", "CMU Scarf", "Stylish Scarf", "Volleyball"]
-for(var i = 0; i < names.length; i++) {
-    if(inventory != null && inventory.includes(items[i])) {
-        document.getElementById(items[i]).innerHTML = names[i]
-        document.getElementById(items[i]).style.display = "block"
-        console.log("ADDED: " + items[i])
-    } else {
-        document.getElementById(items[i]).style.display= "none"
-        console.log("NOT ADDED: " + items[i])
-    }
-}
+init()
