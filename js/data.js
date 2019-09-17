@@ -291,9 +291,9 @@ function save() {
 
     // maps item names to a boolean representing if an item was obtained or not
     for(var i = 0; i < items.length; i++) {
-        var inInventory = 0
+        var inInventory = false
         if(inventory.includes(items[i])) {
-            var inInventory = 1
+            var inInventory = true
             console.log(items[i] + " saved")
         }
         localStorage.setItem(items[i], inInventory)
@@ -312,6 +312,7 @@ function load() {
             inventory.push(items[i]);
             console.log(items[i] + " loaded")
         }
+        console.log(localStorage.getItem(items[i]))
     }
  
     if(weight == null) {
