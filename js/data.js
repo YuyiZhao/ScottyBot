@@ -47,7 +47,6 @@ function unEat(){
     setVisual("none", "none", "block")
 }
 
-//what is this  -Will
 function myHandler(e) {
     // What you want to do after the event
 }

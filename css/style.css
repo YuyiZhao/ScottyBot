@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	background-color: #13E8AE;
+	background-color: #02D0AC;
 }
 
 input {
@@ -29,7 +29,9 @@ button {
 	border-radius: 50px;
 	font-size: 20px;
 	cursor: pointer;
-	
+}
+.btn-group button{
+	float: left;
 }
 
 .middle{
@@ -45,7 +47,6 @@ ul {
 }
 
 .right{
-	float: right;
 	display: inline-block;
 	height: 100%;
 	position: absolute;
