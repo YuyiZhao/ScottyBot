@@ -65,6 +65,10 @@ ul {
 	display: none;
 }
 
+#pet{
+	display:none;	
+}
+
 .big{
 	font-size: 25px
 }

@@ -4,10 +4,11 @@ $.getJSON("js/data.json", function(json) {
     //put calls here?
 });
 
-//document.getElementById("dog").addEventListener("click", pet);
+document.getElementById("dog").addEventListener("click", function (){ animate("pet")} );
 document.getElementById("submit").addEventListener("click", myFunction);
-document.getElementById('walk').addEventListener('ended',unWalk);
-document.getElementById('eat').addEventListener('ended',unEat);
+document.getElementById('walk').addEventListener('ended',idle);
+document.getElementById('eat').addEventListener('ended',idle);
+document.getElementById('pet').addEventListener('ended',idle);
 
 function clearItems(){
     for(var k = 0; k<items.length;k++){
@@ -22,28 +23,65 @@ function clearItems(){
 //----------------------------------------------------------------
 
 // Changes Scotty based on whether it is walking, eating, or sitting
+
+function animate(word){
+    clearVideos();
+    switch (word){
+        case "pet":
+            document.getElementById("pet").style.display = "block";
+            document.getElementById("pet").play();
+            break;
+        case "walk":
+
+            break;
+        case "eat":
+
+            break;
+        case "dog":
+
+            break;
+    }
+}
+
+function idle(){
+    clearVideos()
+    document.getElementById("dog").style.display = "block";
+}
+function clearVideos(){
+    document.getElementById("walk").style.display = "none";
+    document.getElementById("eat").style.display = "none";
+    document.getElementById("dog").style.display = "none";
+    document.getElementById("pet").style.display = "none";
+}
+
+
 function setVisual(walk, eat, dog) {
     document.getElementById("walk").style.display = walk;
     document.getElementById("eat").style.display = eat;
     document.getElementById("dog").style.display = dog;
 }
 
+
 function walk() {
+    clearVideos()
     setVisual("block", "none", "none");
     document.getElementById("walk").play();
     clearItems();
 }
 
 function unWalk() {
+    clearVideos()
     setVisual("none", "none", "block");
 }
 
 function eat(){
+    clearVideos()
     setVisual("none", "block", "none")
     document.getElementById("eat").play();
     clearItems();
 }
 function unEat(){
+    clearVideos()
     setVisual("none", "none", "block")
 }
 
