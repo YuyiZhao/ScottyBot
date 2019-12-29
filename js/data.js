@@ -97,8 +97,10 @@ function myHandler(e) {
 function myFunction() {
     id = document.getElementById("fce-input").value
     if (isValid(id)){
-      document.getElementById("FCEtot").innerHTML = "Total FCE: "+ getFCE(id) +
-      "</br>For class: " + getName(id)
+        let fce = getFCE(id);
+        fce = Math.round(fce*100)/100
+        document.getElementById("FCEtot").innerHTML = "Total FCE: "+ fce +
+        "</br>For class: " + getName(id)
         //alert("Average time spent for " + getName(id) + ": "+ getFCE(id))
     } else {
         alert("Enter a valid course number")
