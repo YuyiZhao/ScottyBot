@@ -6,7 +6,7 @@ $.getJSON("js/2019fall.json", function(json) {
 
 
 //event listeners
-document.getElementById("dog").addEventListener("click", function (){ animate("pet")} );
+document.getElementById("dog").addEventListener("click", function (){ startAnimation("pet")} );
 document.getElementById("submit").addEventListener("click", myFunction);
 document.getElementById("fce-input").addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -17,8 +17,8 @@ document.getElementById('walk').addEventListener('ended',idle);
 document.getElementById('eat').addEventListener('ended',idle);
 document.getElementById('pet').addEventListener('ended',idle);
 //document.getElementById("walk-button").addEventListener('click', animate("walk"));
-document.getElementById("walk-button").addEventListener('click', startWalk);
-document.getElementById("treat-button").addEventListener('click', startTreat);
+document.getElementById("walk-button").addEventListener('click', function(){startAnimation("walk")});
+document.getElementById("treat-button").addEventListener('click', function(){startAnimation("eat")});
 
 function clearItems(){
     for(var k = 0; k<items.length;k++){
@@ -37,9 +37,7 @@ var isIdle = true;
 
 function animate(word){
     clearVideos();
-    if (!isIdle){
-        return;
-    }
+    clearItems();
     switch (word){
         case "pet":
             document.getElementById("pet").style.display = "block";
@@ -192,27 +190,40 @@ for(let i = 0; i<5;i++){
 }
 
 //attempted universal timer function
-function decrementTimer(name){
+function startAnimation(name){
+    if (!isIdle){
+        return;
+    }
+    isIdle = false;
+    let vid;
     switch (name){
         case "pet":
-            var time = petTime;
-            var vid = document.getElementById("pet")
+            time = petTime;
+            vid = document.getElementById("pet")
+            animate("pet")
             break;
         case "walk":
-            var time = walkTime;
-            var vid = document.getElementById("walk")
+            time = walkTime;
+            vid = document.getElementById("walk")
+            button = document.getElementById("walk-button")
+            animate("walk")
             break;
         case "eat":
-            var time = treatTime;
-            var vid = document.getElementById("eat")
+            time = treatTime;
+            vid = document.getElementById("eat")
+            button = document.getElementById("treat-button")
+            animate("eat")
             break;
         case "dog":
     }
-    loopDown()
+    loopDown(name)
 }
+var button;
+var time = 0;
 
-function loopDown(){
+function loopDown(name){
     time -= 1000
+    console.log(time);
     if ((time/1000) % 60 < 10) {
         mins = "0" + (time/1000 % 60).toString()
     } else {
@@ -220,11 +231,44 @@ function loopDown(){
     }
     var timer = Math.floor((time/1000) / 60) + ":" + mins
  
-    document.getElementById("walk-button").innerHTML = timer
+    //document.getElementById("walk-button").innerHTML = timer
+    if (button){
+        button.innerHTML = timer
+    }
     if (time <= 0) {
-        endWalk();
+        endAnim(name);
+        return;
     } else {
-        setTimeout(loopDown, 1000)
+        setTimeout(function(){loopDown(name)}, 1000)
+    }
+}
+
+function endAnim(name){
+    isIdle = true;
+    button = null;
+    switch(name){
+        case "pet":
+            break;
+        case "walk":
+            distanceWalked++;
+            weight = (weight*0.975).toFixed(3);
+            document.getElementById("walk-button").innerHTML = "Walk"
+            isIdle = true
+            walkTime = Math.ceil(document.getElementById("walk").duration+1)*1000;
+            update()
+            findItem()
+            save()
+            break;
+        case "eat":
+            console.log("End Treat")
+            treatsGiven++;
+            weight = (weight*1.05).toFixed(3);
+            document.getElementById("treat-button").innerHTML = "Feed"
+            isIdle = true
+            treatTime = Math.ceil(document.getElementById("eat").duration+1)*1000
+            update()
+            save()
+            break;
     }
 }
 // CHANGE THIS TO SET WALK/TREAT TIMES 
@@ -244,30 +288,12 @@ function startWalk() {
         decrementWalkTimer()
     }
 }
- 
-// decrease walk timer by one second
-function decrementWalkTimer() {
-    walkTime -= 1000
-    if ((walkTime/1000) % 60 < 10) {
-        mins = "0" + (walkTime/1000 % 60).toString()
-    } else {
-        mins = walkTime/1000 % 60
-    }
-    var timer = Math.floor((walkTime/1000) / 60) + ":" + mins
- 
-    document.getElementById("walk-button").innerHTML = timer
-    if (walkTime <= 0) {
-        endWalk();
-    } else {
-        setTimeout(decrementWalkTimer, 1000)
-    }
-}
- 
+
 // starts treat timer
 function startTreat() {
     if(isIdle) {
         eat()
-        isIdle = true
+        isIdle = false;
         decrementTreatTimer()  
     }
 }
@@ -292,28 +318,12 @@ function decrementTreatTimer() {
  
 // ends the walk and changes weight and distance walked counters
 function endWalk() {
-    console.log("End Walk")
-    distanceWalked++;
-    weight = (weight*0.975).toFixed(3);
-    document.getElementById("walk-button").innerHTML = "Walk"
-    isIdle = true
-    walkTime = Math.ceil(document.getElementById("walk").duration+1)*1000;
-    update()
-    findItem()
-    save()
  
 }
  
 // ends the feeding and changes weight and distance walked counters
 function endTreat() {
-    console.log("End Treat")
-    treatsGiven++;
-    weight = (weight*1.05).toFixed(3);
-    document.getElementById("treat-button").innerHTML = "Feed"
-    isIdle = true
-    treatTime = Math.ceil(document.getElementById("eat").duration+1)*1000
-    update()
-    save()
+
 }
  
 // mechanism for randomly finding items on walks
