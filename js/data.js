@@ -276,56 +276,6 @@ var walkTime = 7000;
 var treatTime = 4000;
 var petTime = 4000;
 
-
-// starts walk timer
-function startWalk() {
-    if(isIdle) {
-        clearVideos()
-        setVisual("block", "none", "none");
-        document.getElementById("walk").play();
-        clearItems();
-        isIdle = false;
-        decrementWalkTimer()
-    }
-}
-
-// starts treat timer
-function startTreat() {
-    if(isIdle) {
-        eat()
-        isIdle = false;
-        decrementTreatTimer()  
-    }
-}
- 
-// decrease treat timer by one second
-function decrementTreatTimer() {
-    treatTime -= 1000
-    if ((treatTime/1000) % 60 < 10) {
-        mins = "0" + (treatTime/1000 % 60).toString()
-    } else {
-        mins = treatTime/1000 % 60
-    }
-    var timer = Math.floor((treatTime/1000) / 60) + ":" + mins
- 
-    document.getElementById("treat-button").innerHTML = timer
-    if (treatTime <= 0) {
-        endTreat();
-    } else {
-        setTimeout(decrementTreatTimer, 1000)
-    }
-}
- 
-// ends the walk and changes weight and distance walked counters
-function endWalk() {
- 
-}
- 
-// ends the feeding and changes weight and distance walked counters
-function endTreat() {
-
-}
- 
 // mechanism for randomly finding items on walks
 function findItem() {
     var i;
